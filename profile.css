@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* --- 1. CORE VARIABLES (Must match Dashboard) --- */
+:root {
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --glass-blur: blur(20px) saturate(180%);
+}
+
+:root[data-theme="light"], :root {
+    --bg-base: #f5f5f7; --card-bg: #ffffff;
+    --text-primary: #1d1d1f; --text-secondary: #86868b;
+    --accent: #0071e3; --accent-hover: #0077ed; --danger: #ff3b30;
+    --border: #d2d2d7; --input-bg: #f5f5f7;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+:root[data-theme="dark"] {
+    --bg-base: #000000; --card-bg: #1c1c1e;
+    --text-primary: #f5f5f7; --text-secondary: #86868b;
+    --accent: #2997ff; --accent-hover: #0071e3; --danger: #ff453a;
+    --border: #38383a; --input-bg: #2c2c2e;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+main.dashboard-container {
+    animation: pageEntrance 0.8s var(--ease-spring) forwards;
+    opacity: 0; transform: translateY(30px);
+}
+@keyframes pageEntrance { to { opacity: 1; transform: translateY(0); } }
+
+/* --- 3. PROFILE HEADER & AVATAR --- */
+.profile-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 40px; padding: 40px;
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 24px; box-shadow: var(--shadow-sm);
+    transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease;
+    overflow: visible; /* Important for the floating button */
+}
+.profile-header:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.profile-header-content { display: flex; align-items: center; gap: 32px; z-index: 1; }
+
+/* === FIXED AVATAR STYLING === */
+.profile-avatar-container {
+    position: relative;
+    width: 120px; height: 120px;
+    margin-right: 10px;
+}
+
+.profile-avatar-display {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    /* Default Gradient */
+    background: linear-gradient(135deg, var(--accent), #00c6fb);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 800; font-size: 48px;
+    
+    /* Image Handling */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    border: 4px solid var(--card-bg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+/* Floating Camera Button (Instagram Style) */
+.avatar-edit-badge {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--card-bg);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.2s var(--ease-spring);
+    color: white;
+}
+
+.avatar-edit-badge:hover {
+    transform: scale(1.1);
+    background: var(--accent-hover);
+}
+
+/* --- PROFILE TEXT --- */
+.profile-name { font-size: 34px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; letter-spacing: -0.5px; }
+.profile-email { font-size: 16px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 500; }
+.profile-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; background: rgba(0, 113, 227, 0.1);
+    border-radius: 50px; font-weight: 700; color: var(--accent); font-size: 13px;
+}
+
+/* Edit Profile Button */
+.btn-edit {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 24px; background: var(--accent);
+    border: none; border-radius: 50px; color: white;
+    font-weight: 600; font-size: 15px; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+    transition: all 0.3s var(--ease-spring);
+}
+.btn-edit:hover { transform: translateY(-2px) scale(1.05); background: var(--accent-hover); }
+.btn-edit .edit-icon { transition: transform 0.4s var(--ease-bounce); }
+.btn-edit:hover .edit-icon { transform: rotate(20deg) scale(1.2); }
+
+/* --- SECTIONS & GRIDS --- */
+.profile-section {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 24px; padding: 40px; margin-bottom: 30px;
+    box-shadow: var(--shadow-sm);
+}
+.section-title { font-size: 22px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary); }
+.info-grid, .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+
+.info-item {
+    padding: 24px; background: var(--bg-base);
+    border: 1px solid transparent; border-radius: 18px;
+    transition: all 0.3s var(--ease-spring);
+}
+.info-item:hover { background: var(--card-bg); border-color: var(--accent); transform: translateY(-5px); box-shadow: var(--shadow-md); }
+.info-label { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px; }
+.info-value { font-size: 17px; font-weight: 600; color: var(--text-primary); }
+
+.form-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+.form-label { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; }
+.form-input, .form-select {
+    width: 100%; padding: 16px; background: var(--input-bg);
+    border: 1px solid transparent; border-radius: 14px; outline: none;
+    color: var(--text-primary); font-size: 16px; font-weight: 500;
+    font-family: 'Inter', sans-serif; transition: all 0.3s var(--ease-smooth);
+}
+.form-input:focus, .form-select:focus { background: var(--card-bg); border-color: var(--accent); transform: scale(1.01); }
+.form-input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.form-actions { display: flex; gap: 16px; justify-content: flex-end; margin-top: 20px; }
+.btn-cancel { padding: 14px 32px; background: var(--input-bg); border-radius: 14px; color: var(--text-primary); font-weight: 600; border: 1px solid transparent; cursor: pointer; transition: all 0.3s; }
+.btn-save { padding: 14px 32px; background: var(--accent); border-radius: 14px; color: white; font-weight: 600; border: none; cursor: pointer; transition: all 0.3s; }
+.btn-save:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3); }
+
+.delete-section { margin-top: 60px; padding-top: 40px; border-top: 2px dashed var(--border); display: flex; justify-content: center; }
+.btn-delete-trigger {
+    background: var(--input-bg); border: 2px solid transparent;
+    color: var(--text-secondary); font-size: 15px; font-weight: 600;
+    display: flex; align-items: center; gap: 14px; cursor: pointer;
+    padding: 14px 32px; border-radius: 50px; transition: all 0.3s var(--ease-spring);
+    position: relative; overflow: visible;
+}
+.game-bin-icon { display: block; overflow: visible; transition: transform 0.3s var(--ease-bounce); }
+.bin-body, .bin-stripes, .bin-body-shadow, .bin-lid, .trash-item { transition: all 0.4s var(--ease-bounce); transform-origin: center bottom; }
+.bin-lid { transform-origin: 85% 85%; } 
+.trash-item { opacity: 0; transform: translateY(10px) scale(0.5); }
+.trash-item.t2 { transition-delay: 0.05s; }
+.delete-label { transition: color 0.3s ease; }
+
+.btn-delete-trigger:hover { background-color: #fff1f0; border-color: var(--danger); transform: scale(1.08) translateY(-4px); }
+.btn-delete-trigger:hover .delete-label { color: var(--danger); }
+.btn-delete-trigger:hover .bin-lid { transform: translateY(-8px) rotate(-45deg); }
+.btn-delete-trigger:hover .bin-body { transform: scaleY(0.9) scaleX(1.05); } 
+.btn-delete-trigger:hover .trash-item { opacity: 1; transform: translateY(-20px) scale(1.3) rotate(15deg); }
+
+/* --- FIXED MODAL BUTTONS --- */
+.modal-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); 
+    display: flex; justify-content: center; align-items: center; 
+    z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s ease; 
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+.modal-card { 
+    background: var(--card-bg); padding: 40px; width: 90%; max-width: 450px;
+    border-radius: 28px; box-shadow: 0 40px 80px rgba(0,0,0,0.2); 
+    transform: scale(0.8); opacity: 0; transition: all 0.5s var(--ease-spring); 
+    border: 1px solid var(--border); 
+}
+.modal-overlay.active .modal-card { transform: scale(1) translateY(0); opacity: 1; }
+
+.modal-header { margin-bottom: 20px; text-align: center; }
+.warning-icon-wrapper { font-size: 48px; margin-bottom: 16px; display: inline-block; animation: shake 2s infinite; }
+.modal-title { font-size: 24px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
+.modal-text { text-align: center; color: var(--text-secondary); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+
+.danger-input { border-color: #ffccc7; background-color: #fff1f0; color: var(--danger); font-weight: 600; }
+
+.modal-actions { display: flex; gap: 12px; margin-top: 24px; width: 100%; }
+
+/* Fixed Cancel Button */
+.btn-cancel-modal {
+    flex: 1; padding: 14px; 
+    background: var(--bg-base); /* Ensure it has a background */
+    border: 1px solid var(--border);
+    color: var(--text-primary); 
+    border-radius: 12px; font-weight: 600; cursor: pointer; 
+    transition: all 0.2s;
+    text-align: center;
+}
+.btn-cancel-modal:hover { background: #e5e5ea; transform: translateY(-2px); }
+
+/* Fixed Delete Button */
+.btn-confirm-delete {
+    flex: 1; padding: 14px; 
+    background: var(--danger); 
+    color: white; 
+    border-radius: 12px; font-weight: 700; border: none; cursor: pointer; 
+    transition: all 0.2s;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+}
+.btn-confirm-delete:hover { background: #d70015; transform: translateY(-2px); }
