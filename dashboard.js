@@ -61,7 +61,7 @@ function initializeDashboard(user, userData) {
     // 1. Set User Name (Prioritize Database Name)
     const displayName = userData.fullName || user.displayName || 'Student';
     const firstName = displayName.split(' ')[0];
-    
+
     const nameElement = document.getElementById('userName');
     if (nameElement) nameElement.textContent = firstName;
 
@@ -183,7 +183,13 @@ function setupEventListeners() {
             const actionCard = e.target.closest('.action-card');
             if (actionCard) {
                 const actionTitle = actionCard.querySelector('.action-title').textContent;
-                alert(`${actionTitle} feature coming soon!`);
+
+                // Redirect to mock test page if "Start Mock Test" is clicked
+                if (actionTitle === 'Start Mock Test') {
+                    window.location.href = 'mocktest.html';
+                } else {
+                    alert(`${actionTitle} feature coming soon!`);
+                }
             }
         });
     });
